@@ -36,3 +36,9 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> = Composit
   BottomTabScreenProps<RootTabParamList, Screen>,
   NativeStackScreenProps<RootStackParamList>
 >;
+
+export type TodoItem = {
+  name: string;
+  id: string;
+  isCompleted: boolean;
+}

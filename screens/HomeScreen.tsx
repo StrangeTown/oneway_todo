@@ -1,9 +1,13 @@
 import { Button, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
+import { useAppSelector } from "../hooks/reduxHooks";
+import { selectItems } from "../slices/itemsSlice";
 import { RootTabScreenProps } from "../types";
 
 
 export default function HomeScreen({navigation}:RootTabScreenProps<'Home'>) {
+  const items = useAppSelector(selectItems)
+
   const goToAdd = () => {
     navigation.navigate('AddModal')
   }
@@ -14,10 +18,10 @@ export default function HomeScreen({navigation}:RootTabScreenProps<'Home'>) {
       </View>
       <ScrollView style={styles.list}>
         {
-          new Array(20).fill(0).map((item, idx) => {
+          items.map((item, idx) => {
             return (
-              <View style={styles.item}>
-                <Text>{item}_{idx}</Text>
+              <View style={styles.item} key={item.id}>
+                <Text>{item.name}_{idx}</Text>
               </View>
             )
           })

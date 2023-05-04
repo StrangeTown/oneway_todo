@@ -41,4 +41,6 @@ export type TodoItem = {
   name: string;
   id: string;
   isCompleted: boolean;
+  isImportant?: boolean;
+  isUrgent?: boolean;
 }

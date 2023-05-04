@@ -27,11 +27,14 @@ export const itemsSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action: PayloadAction<TodoItem>) => {
-      state.items.push(action.payload)
+      state.items.unshift(action.payload)
+    },
+    setItems: (state, action: PayloadAction<TodoItem[]>) => {
+      state.items = action.payload
     }
   }
 })
 
-export const { addItem } = itemsSlice.actions
+export const { addItem, setItems } = itemsSlice.actions
 export const selectItems = (state: RootState) => state.itemsReducer.items
 export default itemsSlice.reducer

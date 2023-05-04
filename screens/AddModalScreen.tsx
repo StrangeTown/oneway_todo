@@ -1,8 +1,13 @@
 import { StatusBar } from "expo-status-bar"
 import { useState } from "react"
-import { Button, Platform, Pressable, StyleSheet, TextInput } from "react-native"
+import {
+  Button,
+  Platform,
+  StyleSheet,
+  TextInput,
+} from "react-native"
 
-import { Text, View } from "../components/Themed"
+import { View } from "../components/Themed"
 import { useAppDispatch } from "../hooks/reduxHooks"
 import { addItem } from "../slices/itemsSlice"
 
@@ -10,11 +15,13 @@ export default function AddModalScreen() {
   const [name, setName] = useState("")
   const dispatch = useAppDispatch()
   const addToList = () => {
-    dispatch(addItem({
-      name,
-      id: new Date().toDateString(),
-      isCompleted: false
-    }))
+    dispatch(
+      addItem({
+        name,
+        id: new Date().toDateString(),
+        isCompleted: false,
+      })
+    )
   }
   return (
     <View style={styles.container}>
@@ -22,12 +29,12 @@ export default function AddModalScreen() {
         style={styles.nameInput}
         placeholder="Item Name"
         value={name}
-        onChangeText={val => {
+        onChangeText={(val) => {
           setName(val)
         }}
       />
       <View>
-        <Button title="Add to Stack" onPress={addToList}/>
+        <Button title="Add to Stack" onPress={addToList} />
       </View>
 
       {/* Use a light status bar on iOS to account for the black space above the modal */}

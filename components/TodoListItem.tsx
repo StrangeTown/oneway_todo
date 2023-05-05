@@ -19,23 +19,32 @@ export const AddButton = ({ onPress }: AddButtonProps) => {
 
 interface TodoListItemProps {
   item: TodoItem
+  isActive: boolean
+  onPress: () => void
 }
-export function TodoListItem({ item }: TodoListItemProps) {
+export function TodoListItem({ item, isActive, onPress }: TodoListItemProps) {
   return (
-    <View
+    <TouchableOpacity
+      onPress={onPress}
       style={[
         styles.container,
         item.isImportant && styles.isImportant,
         item.isUrgent && styles.isUrgent,
         item.isImportant && item.isUrgent && styles.importantAndUrgent,
+        isActive && styles.isActive,
       ]}
     >
       {/* <Text>{item?.name}</Text> */}
-    </View>
+    </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
+  isActive: {
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    opacity: 0.5,
+  },
   addButtonText: {
     fontSize: 14,
     color: "#595a5c",
@@ -50,6 +59,12 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    borderColor: "#fff",
+    borderWidth: 6,
   },
   addButton: {
     backgroundColor: "#fff",

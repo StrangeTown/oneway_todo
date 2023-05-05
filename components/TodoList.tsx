@@ -27,7 +27,14 @@ const resortItems = (items: any[]) => {
   ]
 }
 
-export default function TodoList() {
+interface TodoListProps {
+  activeItemId: string | undefined
+  onSelectedItemIdChange: (id: string) => void
+}
+export default function TodoList({
+  activeItemId,
+  onSelectedItemIdChange,
+}: TodoListProps) {
   const items = useSelector(selectItems)
   const [addModalVisible, setAddModalVisible] = React.useState(false)
   const sortedItems = resortItems(items)
@@ -36,7 +43,17 @@ export default function TodoList() {
     <View style={styles.container}>
       <AddButton onPress={() => setAddModalVisible(true)} />
       {sortedItems.map((item) => {
-        return <TodoListItem key={item.id} item={item} />
+        const isActive = item.id === activeItemId
+        return (
+          <TodoListItem
+            key={item.id}
+            item={item}
+            isActive={isActive}
+            onPress={() => {
+              onSelectedItemIdChange(item.id)
+            }}
+          />
+        )
       })}
 
       <AddModal

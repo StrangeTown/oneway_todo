@@ -32,13 +32,28 @@ export const itemsSlice = createSlice({
     setItems: (state, action: PayloadAction<TodoItem[]>) => {
       state.items = action.payload
     },
+    toggleItem: (state, action: PayloadAction<string>) => {
+      const item = state.items.find((item) => item.id === action.payload)
+      if (item) {
+        state.items = state.items.map((item) => {
+          if (item.id === action.payload) {
+            return {
+              ...item,
+              isCompleted: !item.isCompleted,
+            }
+          }
+          return item
+        })
+      }
+    },
   },
 })
 
-export const { addItem, setItems } = itemsSlice.actions
+export const { addItem, setItems, toggleItem } = itemsSlice.actions
 export const selectItems = (state: RootState) => state.itemsReducer.items
-export const selectSortedItems = (state: RootState) => {
+export const selectDisplayedItems = (state: RootState) => {
   const items = state.itemsReducer.items
-  return utils.resortItems(items)
+  const undoneItems = items.filter((item) => !item.isCompleted)
+  return utils.resortItems(undoneItems)
 }
 export default itemsSlice.reducer

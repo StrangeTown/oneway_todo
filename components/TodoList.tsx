@@ -1,31 +1,11 @@
 import React from "react"
-import { View, Text } from "../components/Themed"
+import { View } from "../components/Themed"
 
 import { StyleSheet } from "react-native"
 import { AddButton, TodoListItem } from "./TodoListItem"
 import { useSelector } from "react-redux"
-import { selectItems } from "../slices/itemsSlice"
+import { selectDisplayedItems } from "../slices/itemsSlice"
 import AddModal from "./AddModal"
-
-const resortItems = (items: any[]) => {
-  // order: normal, important, urgent, important and urgent
-  const normalItems = items.filter(
-    (item) => !item.isImportant && !item.isUrgent
-  )
-  const importantItems = items.filter(
-    (item) => item.isImportant && !item.isUrgent
-  )
-  const urgentItems = items.filter((item) => item.isUrgent && !item.isImportant)
-  const importantAndUrgentItems = items.filter(
-    (item) => item.isImportant && item.isUrgent
-  )
-  return [
-    ...normalItems,
-    ...importantItems,
-    ...urgentItems,
-    ...importantAndUrgentItems,
-  ]
-}
 
 interface TodoListProps {
   activeItemId: string | undefined
@@ -35,14 +15,13 @@ export default function TodoList({
   activeItemId,
   onSelectedItemIdChange,
 }: TodoListProps) {
-  const items = useSelector(selectItems)
+  const items = useSelector(selectDisplayedItems)
   const [addModalVisible, setAddModalVisible] = React.useState(false)
-  const sortedItems = resortItems(items)
 
   return (
     <View style={styles.container}>
       <AddButton onPress={() => setAddModalVisible(true)} />
-      {sortedItems.map((item) => {
+      {items.map((item) => {
         const isActive = item.id === activeItemId
         return (
           <TodoListItem

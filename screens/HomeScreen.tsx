@@ -1,7 +1,7 @@
-import { Button, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { Text, View } from "../components/Themed";
+import { SafeAreaView, StyleSheet } from "react-native";
+import { View } from "../components/Themed";
 import { useAppSelector } from "../hooks/reduxHooks";
-import { selectItems, selectSortedItems } from "../slices/itemsSlice";
+import { selectDisplayedItems } from "../slices/itemsSlice";
 import { RootTabScreenProps } from "../types";
 import TodoList from "../components/TodoList";
 import ActiveTodoItem from "../components/ActiveTodoItem";
@@ -9,13 +9,16 @@ import { useState } from "react";
 
 
 export default function HomeScreen({navigation}:RootTabScreenProps<'Home'>) {
-  const items = useAppSelector(selectSortedItems)
+  const items = useAppSelector(selectDisplayedItems)
   const [selectedItemId, setSelectedItemId] = useState<string | undefined>()
 
   // last item in the list
   const defaultActiveItem = items[items.length - 1]
+  const isSelectedItemDisplayed = items.some(
+    (item) => item.id === selectedItemId
+  )
 
-  const activeItemId = selectedItemId || defaultActiveItem?.id
+  const activeItemId = isSelectedItemDisplayed ? selectedItemId : defaultActiveItem?.id
 
   const goToAdd = () => {
     navigation.navigate('AddModal')

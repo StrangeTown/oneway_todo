@@ -34,12 +34,39 @@ export function TodoListItem({ item, isActive, onPress }: TodoListItemProps) {
         isActive && styles.isActive,
       ]}
     >
+      {
+        item.isImportant && item.isUrgent && (
+
+          // half is urgent color and half is important color
+          <View style={styles.importantAndUrgentIcon} >
+            <View style={styles.importantAndUrgentIconLeft} />
+          </View>
+        )
+      }
       {/* <Text>{item?.name}</Text> */}
     </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
+  importantAndUrgentIcon: {
+    width: 24,
+    height: 24,
+    borderRadius: 100,
+    backgroundColor: "#ec6d71",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    overflow: "hidden",
+  },
+  importantAndUrgentIconLeft: {
+    width: 12,
+    height: 24,
+    backgroundColor: "#f5d76e",
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
   isActive: {
     shadowOpacity: 0.1,
     shadowRadius: 1,
@@ -65,6 +92,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     borderColor: "#fff",
     borderWidth: 6,
+    position: "relative",
   },
   addButton: {
     backgroundColor: "#fff",
@@ -77,6 +105,9 @@ const styles = StyleSheet.create({
   },
   importantAndUrgent: {
     // gradient
-    backgroundColor: "#595a5c",
+    // backgroundColor: "#595a5c",
+    // backgroundColor: "rgb(245,215,110)",
+    backgroundColor: "linear-gradient(53deg, rgba(245,215,110,1) 9%, rgba(236,109,113,1) 100%)",
+
   },
 })

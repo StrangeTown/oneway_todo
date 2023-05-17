@@ -37,7 +37,7 @@ export default function ActiveTodoItem({ itemId }: ActiveTodoItemProps) {
 const styles = StyleSheet.create({
   itemName: {
     fontSize: 20,
-    color: "#333",
+    color: "#5b5c5a",
   },
   content: {
     flex: 1,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 10,
   },

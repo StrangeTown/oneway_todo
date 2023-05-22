@@ -1,23 +1,27 @@
 // active todo item
-
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { selectItems, toggleItem } from "../slices/itemsSlice"
-import { useAppDispatch } from "../hooks/reduxHooks"
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native"
+import { selectItems } from "../slices/itemsSlice"
 import { useAppSelector } from "../hooks/reduxHooks"
 
 interface ActiveTodoItemProps {
   itemId: string | undefined
+  onRemoveClick: () => void
 }
-export default function ActiveTodoItem({ itemId }: ActiveTodoItemProps) {
-  const dispatch = useAppDispatch()
+export default function ActiveTodoItem({
+  itemId,
+  onRemoveClick,
+}: ActiveTodoItemProps) {
   const items = useAppSelector(selectItems)
   const item = items.find((item) => item.id === itemId)
   const name = item?.name
 
   const handleRemove = () => {
-    if (itemId) {
-      dispatch(toggleItem(itemId))
-    }
+    onRemoveClick()
   }
 
   return (
@@ -27,7 +31,7 @@ export default function ActiveTodoItem({ itemId }: ActiveTodoItemProps) {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.removeButton} onPress={handleRemove}>
-          <Text style={styles.removeButtonText}>Remove</Text>
+          <Text style={styles.removeButtonText}>REMOVE</Text>
         </TouchableOpacity>
       </View>
     </View>

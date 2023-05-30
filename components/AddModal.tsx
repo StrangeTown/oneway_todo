@@ -13,31 +13,40 @@ import { useAppDispatch } from "../hooks/reduxHooks"
 import { addItem } from "../slices/itemsSlice"
 import { TodoItem } from "../types"
 import uuid from "react-native-uuid"
+import Colors from "../constants/Colors"
 
 interface CheckboxItemProps {
   label: string
   value: boolean
   onChange: (val: boolean) => void
+  activeColor?: string
 }
-const CheckboxItem = ({ label, value, onChange }: CheckboxItemProps) => {
+const CheckboxItem = ({
+  label,
+  value,
+  onChange,
+  activeColor,
+}: CheckboxItemProps) => {
   return (
-    <View style={styles.checkboxContainer}>
-      {/* label */}
-      <TouchableOpacity style={styles.checkboxLabel} onPress={() => onChange(!value)}>
-        <Text>{label}</Text>
-      </TouchableOpacity>
-
-      {/* checkbox */}
-      <TouchableOpacity
-        style={styles.checkbox}
-        onPress={() => onChange(!value)}
+    <TouchableOpacity
+      style={styles.checkboxLabel}
+      onPress={() => onChange(!value)}
+    >
+      <Text
+        style={[
+          styles.checkboxLabelText,
+          value && {
+            color: activeColor || Colors.light.itemBackgroundDefault,
+            backgroundColor: activeColor || Colors.light.itemBackgroundDefault,
+            ...styles.checkboxLabelTextActive,
+          },
+        ]}
       >
-        {value && <View style={styles.checkboxInner} />}
-      </TouchableOpacity>
-    </View>
+        {label}
+      </Text>
+    </TouchableOpacity>
   )
 }
-      
 
 interface AddModalProps {
   isVisible: boolean
@@ -71,31 +80,51 @@ export default function AddModal({ isVisible, onClose }: AddModalProps) {
       presentationStyle="pageSheet"
     >
       <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => setText(text)}
-          value={text}
-          placeholder="Enter Todo Item Name"
-        />
+        <View style={styles.contentContainer}>
+          <View style={styles.content}>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => setText(text)}
+              value={text}
+              placeholder="Enter Todo Item Name"
+              multiline={true}
+              numberOfLines={3}
+            />
 
-        {/* is important */}
-        <CheckboxItem label="Important" value={isImportant} onChange={setIsImportant} />
+            <View style={styles.optionsContainer}>
+              {/* is important */}
+              <CheckboxItem
+                label="Important"
+                value={isImportant}
+                onChange={setIsImportant}
+                activeColor={Colors.light.itemBackgroundImportant}
+              />
 
-        {/* is urgent */}
-        <CheckboxItem label="Urgent" value={isUrgent} onChange={setIsUrgent} />
+              {/* is urgent */}
+              <CheckboxItem
+                label="Urgent"
+                value={isUrgent}
+                onChange={setIsUrgent}
+                activeColor={Colors.light.itemBackgroundUrgent}
+              />
+            </View>
+          </View>
+        </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={[styles.button, styles.cancelButton]}
-            onPress={onClose}
-          >
-            <Text style={styles.buttonText}>Cancel</Text>
-          </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, styles.submitButton]}
             onPress={handleSubmit}
           >
             <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, styles.cancelButton]}
+            onPress={onClose}
+          >
+            <Text style={[styles.buttonText, styles.cancelButtonText]}>
+              Cancel
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -104,29 +133,41 @@ export default function AddModal({ isVisible, onClose }: AddModalProps) {
 }
 
 const styles = StyleSheet.create({
-  checkboxLabel: {
+  content: {
+    borderColor: "#eeeeee",
+    borderWidth: 1,
+    // boxshadow
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  contentContainer: {
     flex: 1,
   },
-  checkboxContainer: {
+  optionsContainer: {
+    display: "flex",
     flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20,
+    borderTopColor: "#eeeeee",
+    borderTopWidth: 0.5,
   },
-  checkbox: {
-    width: 20,
-    height: 20,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#000",
-    marginRight: 10,
-    justifyContent: "center",
-    alignItems: "center",
+  checkboxLabelText: {
+    fontSize: 16,
+    color: Colors.light.itemBackgroundDefault,
+    width: "100%",
+    textAlign: "center",
+    paddingVertical: 6,
   },
-  checkboxInner: {
-    width: 10,
-    height: 10,
-    borderRadius: 2,
-    backgroundColor: "#000",
+  checkboxLabelTextActive: {
+    opacity: 1,
+  },
+  checkboxLabel: {
+    flex: 1,
+    alignItems: "center",
   },
   modal: {
     margin: 0,
@@ -138,16 +179,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   input: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 20,
+    height: 140,
+    lineHeight: 36,
+    marginBottom: 6,
     paddingHorizontal: 10,
+    color: "#5b5c5a",
+    fontSize: 24,
   },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
+    // marginTop: 120,
+    marginBottom: 120,
+    alignItems: "center",
   },
   button: {
     paddingVertical: 10,
@@ -155,13 +197,20 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginLeft: 10,
   },
-  cancelButton: {
-    backgroundColor: "#fff",
-  },
   submitButton: {
-    backgroundColor: "#2196f3",
+    // backgroundColor: "#6c94cd",
+    backgroundColor: "#595a5c",
   },
   buttonText: {
-    color: "#bbb",
+    color: "#fff",
+    textTransform: "uppercase",
+    fontSize: 18,
+  },
+  cancelButton: {
+    marginTop: 10,
+  },
+  cancelButtonText: {
+    color: "#dee3e3",
+    fontSize: 12,
   },
 })

@@ -2,6 +2,7 @@ import { TouchableOpacity, View } from "react-native"
 import { Text } from "./Themed"
 import { StyleSheet } from "react-native"
 import { TodoItem } from "../types"
+import Colors from "../constants/Colors"
 
 interface AddButtonProps {
   onPress: () => void
@@ -30,7 +31,6 @@ export function TodoListItem({ item, isActive, onPress }: TodoListItemProps) {
         styles.container,
         item.isImportant && styles.isImportant,
         item.isUrgent && styles.isUrgent,
-        item.isImportant && item.isUrgent && styles.importantAndUrgent,
         isActive && styles.isActive,
       ]}
     >
@@ -38,7 +38,7 @@ export function TodoListItem({ item, isActive, onPress }: TodoListItemProps) {
         item.isImportant && item.isUrgent && (
 
           // half is urgent color and half is important color
-          <View style={styles.importantAndUrgentIcon} >
+          <View style={styles.importantAndUrgentIconBase} >
             <View style={styles.importantAndUrgentIconLeft} />
           </View>
         )
@@ -49,11 +49,11 @@ export function TodoListItem({ item, isActive, onPress }: TodoListItemProps) {
 }
 
 const styles = StyleSheet.create({
-  importantAndUrgentIcon: {
+  importantAndUrgentIconBase: {
     width: 24,
     height: 24,
     borderRadius: 100,
-    backgroundColor: "#ec6d71",
+    backgroundColor: Colors.light.itemBackgroundUrgent,
     position: "absolute",
     top: 0,
     left: 0,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   importantAndUrgentIconLeft: {
     width: 12,
     height: 24,
-    backgroundColor: "#f5d76e",
+    backgroundColor: Colors.light.itemBackgroundImportant,
     position: "absolute",
     top: 0,
     left: 0,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   container: {
     width: 36,
     height: 36,
-    backgroundColor: "#cdd5d5",
+    backgroundColor: Colors.light.itemBackgroundDefault,
     borderRadius: 100,
     marginHorizontal: 6,
     marginVertical: 6,
@@ -98,16 +98,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   isImportant: {
-    backgroundColor: "#f5d76e",
+    backgroundColor: Colors.light.itemBackgroundImportant,
   },
   isUrgent: {
-    backgroundColor: "#ec6d71",
-  },
-  importantAndUrgent: {
-    // gradient
-    // backgroundColor: "#595a5c",
-    // backgroundColor: "rgb(245,215,110)",
-    backgroundColor: "linear-gradient(53deg, rgba(245,215,110,1) 9%, rgba(236,109,113,1) 100%)",
-
+    backgroundColor: Colors.light.itemBackgroundUrgent,
   },
 })

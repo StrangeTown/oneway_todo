@@ -8,6 +8,9 @@ export default {
     tint: tintColorLight,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
+    itemBackgroundDefault: '#cdd5d5',
+    itemBackgroundImportant: '#f5d76e',
+    itemBackgroundUrgent: '#ec6d71',
   },
   dark: {
     text: '#fff',

@@ -3,6 +3,7 @@ import { Text } from "./Themed"
 import { StyleSheet } from "react-native"
 import { TodoItem } from "../types"
 import Colors from "../constants/Colors"
+import { Feather } from "@expo/vector-icons"
 
 interface AddButtonProps {
   onPress: () => void
@@ -14,6 +15,19 @@ export const AddButton = ({ onPress }: AddButtonProps) => {
       onPress={onPress}
     >
       <Text style={styles.addButtonText}>+</Text>
+    </TouchableOpacity>
+  )
+}
+
+export const ReviewButton = ({ onPress }: AddButtonProps) => {
+  return (
+    <TouchableOpacity
+      style={[styles.container, styles.addButton]}
+      onPress={onPress}
+    >
+      <Text style={styles.addButtonText}>
+        <Feather name="check" size={11} color="#595a5c" />
+      </Text>
     </TouchableOpacity>
   )
 }

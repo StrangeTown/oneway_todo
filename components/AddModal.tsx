@@ -1,6 +1,6 @@
 // add todo item modal
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import {
   Modal,
   View,
@@ -48,6 +48,41 @@ const CheckboxItem = ({
   )
 }
 
+// todo items
+// each item more than 5 words
+const todoList = [
+  "Buy groceries for the week",
+  "Schedule a doctor's appointment",
+  "Pay rent and bills online",
+  "Send an email to a colleague",
+  "Complete project report for work",
+  "Exercise for 30 minutes",
+  "Clean the house top-to-bottom",
+  "Plan a trip to the beach",
+  "Attend marketing conference next month",
+  "Read book on personal development",
+  "Update LinkedIn profile information",
+  "Go for a run in the park",
+  "Make dinner reservations for two",
+  "Organize closet and donate clothes",
+  "Visit museum on a weekday",
+  "Write blog post about industry trends",
+  "Research new software options",
+  "Call parents for weekly catch-up",
+  "Take dog for a walk",
+  "Meet with mentor for career advice",
+  "Learn how to play guitar",
+  "Create outline for new project proposal",
+  "Follow up with potential client",
+  "Watch TED Talk on innovation",
+  "Host a movie night with friends",
+  "Practice public speaking skills",
+  "Start a gratitude journal",
+  "Help a friend move apartments",
+  "Bake homemade cookies for a party",
+  "Study a foreign language vocabulary"
+];
+
 interface AddModalProps {
   isVisible: boolean
   onClose: () => void
@@ -56,8 +91,23 @@ export default function AddModal({ isVisible, onClose }: AddModalProps) {
   const [text, setText] = useState("")
   const [isImportant, setIsImportant] = useState(false)
   const [isUrgent, setIsUrgent] = useState(false)
+  const [currentPlaceholder, setCurrentPlaceholder] = useState("")
+  const inputRef = useRef<TextInput>(null)
 
   const dispatch = useAppDispatch()
+
+  // set random placeholder text every time modal is opened
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * todoList.length)
+    setCurrentPlaceholder(todoList[randomIndex])
+  }, [isVisible])
+
+  // auto focus input when modal is opened
+  useEffect(() => {
+    if (isVisible) {
+      inputRef.current?.focus()
+    }
+  }, [isVisible])
 
   const handleSubmit = () => {
     const newIem: TodoItem = {
@@ -86,9 +136,10 @@ export default function AddModal({ isVisible, onClose }: AddModalProps) {
               style={styles.input}
               onChangeText={(text) => setText(text)}
               value={text}
-              placeholder="Enter Todo Item Name"
+              placeholder={currentPlaceholder}
               multiline={true}
               numberOfLines={3}
+              ref={inputRef}
             />
 
             <View style={styles.optionsContainer}>
@@ -135,18 +186,14 @@ export default function AddModal({ isVisible, onClose }: AddModalProps) {
 const styles = StyleSheet.create({
   content: {
     borderColor: "#eeeeee",
-    borderWidth: 1,
-    // boxshadow
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0,
-    shadowRadius: 3.84,
+    // borderWidth: 1,
+    shadowOpacity: 0.15,
+    shadowRadius: 5,
     elevation: 5,
+    // backgroundColor: "#fff",
   },
   contentContainer: {
+    marginTop: 20,
     flex: 1,
   },
   optionsContainer: {
@@ -154,6 +201,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderTopColor: "#eeeeee",
     borderTopWidth: 0.5,
+    backgroundColor: "#fff",
   },
   checkboxLabelText: {
     fontSize: 16,
@@ -161,6 +209,7 @@ const styles = StyleSheet.create({
     width: "100%",
     textAlign: "center",
     paddingVertical: 6,
+    textTransform: "uppercase",
   },
   checkboxLabelTextActive: {
     opacity: 1,
@@ -207,7 +256,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   cancelButton: {
-    marginTop: 10,
+    marginTop: 16,
   },
   cancelButtonText: {
     color: "#dee3e3",

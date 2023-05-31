@@ -2,7 +2,7 @@ import React from "react"
 import { View } from "../components/Themed"
 
 import { StyleSheet } from "react-native"
-import { AddButton, TodoListItem } from "./TodoListItem"
+import { AddButton, ReviewButton, TodoListItem } from "./TodoListItem"
 import { useSelector } from "react-redux"
 import { selectDisplayedItems } from "../slices/itemsSlice"
 import AddModal from "./AddModal"
@@ -21,6 +21,7 @@ export default function TodoList({
   return (
     <View style={styles.container}>
       <AddButton onPress={() => setAddModalVisible(true)} />
+
       {items.map((item) => {
         const isActive = item.id === activeItemId
         return (
@@ -34,6 +35,8 @@ export default function TodoList({
           />
         )
       })}
+
+      <ReviewButton onPress={() => {}} />
 
       <AddModal
         isVisible={addModalVisible}

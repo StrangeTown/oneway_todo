@@ -26,9 +26,6 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<"Home">) {
     ? selectedItemId
     : defaultActiveItem?.id
 
-  const goToAdd = () => {
-    navigation.navigate("AddModal")
-  }
   const handleRemoveConfirm = () => {
     if (activeItemId) {
       dispatch(toggleItem(activeItemId))

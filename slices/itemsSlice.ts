@@ -40,6 +40,7 @@ export const itemsSlice = createSlice({
             return {
               ...item,
               isCompleted: !item.isCompleted,
+              updateTimestamp: Date.now(),
             }
           }
           return item
@@ -56,4 +57,9 @@ export const selectDisplayedItems = (state: RootState) => {
   const undoneItems = items.filter((item) => !item.isCompleted)
   return utils.resortItems(undoneItems)
 }
+export const selectCompletedItems = (state: RootState) => {
+  const items = state.itemsReducer.items
+  return items.filter((item) => item.isCompleted)
+}
+
 export default itemsSlice.reducer

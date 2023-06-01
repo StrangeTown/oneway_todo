@@ -43,4 +43,5 @@ export type TodoItem = {
   isCompleted: boolean;
   isImportant?: boolean;
   isUrgent?: boolean;
+  updateTimestamp?: number;
 }

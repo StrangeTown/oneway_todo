@@ -6,6 +6,7 @@ import { AddButton, ReviewButton, TodoListItem } from "./TodoListItem"
 import { useSelector } from "react-redux"
 import { selectDisplayedItems } from "../slices/itemsSlice"
 import AddModal from "./AddModal"
+import ReviewModal from "./ReviewModal"
 
 interface TodoListProps {
   activeItemId: string | undefined
@@ -17,6 +18,7 @@ export default function TodoList({
 }: TodoListProps) {
   const items = useSelector(selectDisplayedItems)
   const [addModalVisible, setAddModalVisible] = React.useState(false)
+  const [reviewModalVisible, setReviewModalVisible] = React.useState(false)
 
   return (
     <View style={styles.container}>
@@ -36,11 +38,16 @@ export default function TodoList({
         )
       })}
 
-      <ReviewButton onPress={() => {}} />
+      <ReviewButton onPress={() => setReviewModalVisible(true)} />
 
       <AddModal
         isVisible={addModalVisible}
         onClose={() => setAddModalVisible(false)}
+      />
+
+      <ReviewModal
+        isVisible={reviewModalVisible}
+        onClose={() => setReviewModalVisible(false)}
       />
     </View>
   )

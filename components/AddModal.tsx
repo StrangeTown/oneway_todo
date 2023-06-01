@@ -116,6 +116,7 @@ export default function AddModal({ isVisible, onClose }: AddModalProps) {
       isCompleted: false,
       isImportant,
       isUrgent,
+      updateTimestamp: Date.now(),
     }
     dispatch(addItem(newIem))
     setText("")

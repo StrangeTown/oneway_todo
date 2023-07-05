@@ -1,10 +1,5 @@
 // active todo item
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native"
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { selectItems } from "../slices/itemsSlice"
 import { useAppSelector } from "../hooks/reduxHooks"
 
@@ -24,6 +19,15 @@ export default function ActiveTodoItem({
     onRemoveClick()
   }
 
+  if (!name) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.notFound}>No item yet
+        </Text>
+      </View>
+    )
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -39,6 +43,11 @@ export default function ActiveTodoItem({
 }
 
 const styles = StyleSheet.create({
+  notFound: {
+    fontSize: 16,
+    color: "#5b5c5a",
+    textAlign: "center",
+  },
   itemName: {
     fontSize: 20,
     color: "#5b5c5a",

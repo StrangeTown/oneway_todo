@@ -110,6 +110,11 @@ export default function AddModal({ isVisible, onClose }: AddModalProps) {
   }, [isVisible])
 
   const handleSubmit = () => {
+    const trimmedText = text.trim()
+    if (trimmedText.length === 0) {
+      return
+    }
+
     const newIem: TodoItem = {
       id: uuid.v4() as string,
       name: text,

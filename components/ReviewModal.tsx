@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   section: {
-    marginBottom: 20,
+    marginBottom: 50,
   },
   sectionTitle: {
     fontSize: 12,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    marginBottom: 8,
+    marginBottom: 12,
     textDecorationLine: "line-through",
     color: "#5b5c5a",
     textAlign: "center",
@@ -112,5 +112,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     paddingTop: 100,
+    paddingHorizontal: 20,
   },
 })

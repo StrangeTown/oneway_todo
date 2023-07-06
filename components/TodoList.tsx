@@ -1,7 +1,7 @@
 import React from "react"
 import { View } from "../components/Themed"
 
-import { StyleSheet } from "react-native"
+import { Alert, StyleSheet } from "react-native"
 import { AddButton, ReviewButton, TodoListItem } from "./TodoListItem"
 import { useSelector } from "react-redux"
 import { selectDisplayedItems } from "../slices/itemsSlice"
@@ -20,9 +20,25 @@ export default function TodoList({
   const [addModalVisible, setAddModalVisible] = React.useState(false)
   const [reviewModalVisible, setReviewModalVisible] = React.useState(false)
 
+  const handleAdd = () => {
+    const itemsLength = items.length
+    
+    // equivalent or bigger than 12, alert
+    if (itemsLength >= 12) {
+      Alert.alert(
+        // 积压了太多事项
+        "Too many items",
+        "Please remove some items before adding new ones",
+        [{ text: "OK" }],
+      )
+      return
+    }
+    setAddModalVisible(true)
+  }
+
   return (
     <View style={styles.container}>
-      <AddButton onPress={() => setAddModalVisible(true)} />
+      <AddButton onPress={handleAdd} />
 
       {items.map((item) => {
         const isActive = item.id === activeItemId

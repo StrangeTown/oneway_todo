@@ -19,7 +19,7 @@ export default function ActiveTodoItem({
     onRemoveClick()
   }
 
-  if (!name) {
+  if (!item) {
     return (
       <View style={styles.container}>
         <Text style={styles.notFound}>No item yet

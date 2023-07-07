@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "oneway_todo",
+    "name": "Oneway To Do",
     "slug": "oneway_todo",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -19,7 +19,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "life.whale.onewaytodo"
     },
     "android": {
       "adaptiveIcon": {
@@ -29,6 +30,11 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "de0bdb29-d4a9-4fc7-923f-5a4f370b27ca"
+      }
     }
   }
 }

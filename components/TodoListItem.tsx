@@ -62,10 +62,14 @@ export function TodoListItem({ item, isActive, onPress }: TodoListItemProps) {
   )
 }
 
+const itemSize = 42
+const itemBorderWidth = 6
+const itemInnerSize = itemSize - itemBorderWidth * 2
+
 const styles = StyleSheet.create({
   importantAndUrgentIconBase: {
-    width: 24,
-    height: 24,
+    width: itemInnerSize,
+    height: itemInnerSize,
     borderRadius: 100,
     backgroundColor: Colors.light.itemBackgroundUrgent,
     position: "absolute",
@@ -74,8 +78,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   importantAndUrgentIconLeft: {
-    width: 12,
-    height: 24,
+    width: itemInnerSize / 2,
+    height: itemInnerSize,
     backgroundColor: Colors.light.itemBackgroundImportant,
     position: "absolute",
     top: 0,
@@ -91,8 +95,8 @@ const styles = StyleSheet.create({
     color: "#595a5c",
   },
   container: {
-    width: 36,
-    height: 36,
+    width: itemSize,
+    height: itemSize,
     backgroundColor: Colors.light.itemBackgroundDefault,
     borderRadius: 100,
     marginHorizontal: 6,

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
+  KeyboardAvoidingView,
 } from "react-native"
 import { useAppDispatch } from "../hooks/reduxHooks"
 import { addItem } from "../slices/itemsSlice"
@@ -135,7 +136,10 @@ export default function AddModal({ isVisible, onClose }: AddModalProps) {
       onRequestClose={onClose}
       presentationStyle="pageSheet"
     >
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}
+        behavior="padding"
+        keyboardVerticalOffset={20}
+      >
         <View style={styles.contentContainer}>
           <View style={styles.content}>
             <TextInput
@@ -184,7 +188,7 @@ export default function AddModal({ isVisible, onClose }: AddModalProps) {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   )
 }

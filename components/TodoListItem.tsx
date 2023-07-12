@@ -1,9 +1,11 @@
-import { TouchableOpacity, View } from "react-native"
+import { Platform, TouchableOpacity, View } from "react-native"
 import { Text } from "./Themed"
 import { StyleSheet } from "react-native"
 import { TodoItem } from "../types"
 import Colors from "../constants/Colors"
 import { Feather } from "@expo/vector-icons"
+import RNHapticFeedback from 'react-native-haptic-feedback';
+import * as Device from 'expo-device';
 
 interface AddButtonProps {
   onPress: () => void
@@ -38,9 +40,20 @@ interface TodoListItemProps {
   onPress: () => void
 }
 export function TodoListItem({ item, isActive, onPress }: TodoListItemProps) {
+  const handlePress = () => {
+    const isRealDevice = Device.isDevice
+    if (isRealDevice && Platform.OS === "ios") {
+      RNHapticFeedback.trigger("impactLight", {
+        enableVibrateFallback: true,
+        ignoreAndroidSystemSettings: false,
+      });
+    }
+    onPress()
+  }
+
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={handlePress}
       style={[
         styles.container,
         item.isImportant && styles.isImportant,
